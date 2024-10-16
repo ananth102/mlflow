@@ -1,3 +1,4 @@
+
 """
 Internal package providing a Python CRUD interface to MLflow experiments and runs.
 This is a lower level API than the :py:mod:`mlflow.tracking.fluent` module, and is
@@ -908,6 +909,8 @@ class TrackingServiceClient:
 
     def _log_url(self, run_id):
         if not isinstance(self.store, RestStore):
+            return
+        if self.tracking_uri.startswith("arn:aws"):
             return
         host_url = get_workspace_url()
         if host_url is None:
